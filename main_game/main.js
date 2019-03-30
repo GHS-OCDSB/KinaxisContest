@@ -57,12 +57,19 @@ var brickImage = new Image();
 brickImage.src = "brick.png";
 var vortexImage = new Image();
 vortexImage.src = "vortex.png";
-var markedImage = new Image();
-markedImage.src = "marker.png";
+var heart = new Image();
+heart.src = "heart.png";
+var emptyHeart = new Image();
+emptyHeart.src = "emptyheart.png";
+var keyInventory = new Image();
+keyInventory.src = "keyinventory.png";
+var emptyInventory = new Image();
+emptyInventory.src = "emptyinventory.png";
+
 
 //matrix for each level
 var level0matrix = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -90,7 +97,7 @@ var level0matrix = [
 ]
 //matrix for each level
 var level1matrix = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
     [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
@@ -118,7 +125,7 @@ var level1matrix = [
 ]
 //matrix for each level
 var level2matrix = [
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
   [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 3, 1],
   [1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
   [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
@@ -146,7 +153,7 @@ var level2matrix = [
 ]
 //matrix for each level
 var level3matrix1 = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
     [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
@@ -174,7 +181,7 @@ var level3matrix1 = [
 ]
 //matrix for each level
 var level3matrix2 = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
     [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
@@ -202,7 +209,7 @@ var level3matrix2 = [
 ]
 //matrix for each level
 var level4matrix = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
     [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -230,7 +237,7 @@ var level4matrix = [
 ]
 
 var testmatrix = [
-    [0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -334,8 +341,8 @@ var player = sprite({
 var demon = sprite({
 
   context: l1ctx,
-  x: 252,
-  y: 36,
+  x: 70,
+  y: 30,
   moving: true,
   srcX:0,
   srcY: 0,
@@ -368,179 +375,61 @@ var vortex = sprite({
   curFrame: 0
 })
 
-var solved = false;
-var queue = [];
-//var sourceX = (demon.x/36);
-//var sourceY = (demon.y/36);
-var goalX = (player.x/36);
-var goalY = (player.y/36);
-var marked = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-];
-
-function breadthFirstSearch(source){
-
-  //divide source variable
-  source.x = (source.x/36);
-  source.y = (source.y/36);
-  //floor source variable
-  source.x = Math.floor(source.x);
-  source.y = Math.floor(source.y);
-
-  //if *direction is not a wall and is unmarked
-  console.log("PHASE1: CHECKING X @ ", source.x, ", Y @ ", source.y);
-
-  //add source to queue
-  queue.push(source);
-
-  //while queue isn't empty
-  while((queue.length>0) && (solved == false)){
-    var checking = queue[0];
-
-    //remove CHECKING
-    checking = queue.shift();
-    //if destination is found
-    if((checking.x == goalX) && (checking.y == goalY)){
-      console.log("SOLVED!");
-      solved = true;
-        return checking;
-    }
-    else{
-        //if *direction is not a wall and is unmarked
-        console.log("PHASE2: CHECKING X @ ", checking.x, ", Y @ ", checking.y);
-        //*right
-        if((currentmatrix[checking.y][checking.x+1] != 1) && (marked[checking.y][checking.x+1] == 0)){
-              //change location
-              checking.x++;
-              //mark location
-              marked[checking.y][checking.x] = 1;
-
-              //queue current
-              queue.push(checking);
-        }
-        //*left
-        if((currentmatrix[checking.y][checking.x-1] != 1) && (marked[checking.y][checking.x-1] == 0)){
-              //change location
-              checking.x--;
-              //mark location
-              marked[checking.y][checking.x] = 1;
-              //queue current
-              queue.push(checking);
-        }
-        //*down
-        if((currentmatrix[checking.y+1][checking.x] != 1) && (marked[checking.y+1][checking.x] == 0)){
-              //change location
-              checking.y++;
-              //mark location
-              marked[checking.y][checking.x] = 1;
-              //queue current
-              queue.push(checking);
-        }
-        //*up
-        if((currentmatrix[checking.y-1][checking.x] != 1) && (marked[checking.y-1][checking.x] == 0)){
-          //change location
-          checking.y--;
-          //mark location
-          marked[checking.y][checking.x] = 1;
-          //queue current
-          queue.push(checking);
-        }
-
-      }
-
-    }
-}
-
-
-/*function solveMaze(){
-  //floor
-  sourceX = Math.floor(sourceX);
-  sourceY = Math.floor(sourceY);
-  //if solved = false
-  if(solved==false){
-    //do
-    recursiveAlgorithm(currentX, currentY);
-  }
-
-}
+var wasHere;
+var finalPath;
+var finalPathLen=-1;
+var currentX = (demon.x/36)+1;
+var currentY = (demon.y/36)+1;
+var goalX = (player.x/36)+1;
+var goalY = (player.y/36)+1;
+var marked;
 
 function recursiveAlgorithm(x, y){
-
-  //floor
-  goalX = Math.floor(goalX);
-  goalY = Math.floor(goalY);
-
   //if at goal
-      if((x == goalX) && (y == goalY)){
-        //solved
-        console.log("SOLVED!");
-        solved = true;
-        return;
+      if((x == goalX)&&(y == goalY)){
+        //return current location?
+        return x, y;
       }
       else{
           //if *direction is not a wall and is unmarked
           //*right
-          if((currentmatrix[y][x+1] != 1) && (marked[y][x+1] == 0)){
+          if((currentmatrix[x+1][y] != 1) && (marked[x+1][y] == false)){
                 //change location
                 x++;
                 //mark location
-                marked[y][x] = 1;
+                mark[x][y] = true;
                 //find path from location
                 return recursiveAlgorithm(x, y);
           }
           //*left
-          if((currentmatrix[y][x-1] != 1) && (marked[y][x-1] == 0)){
+          if((currentmatrix[x-1][y] != 1) && (marked[x-1][y] == false)){
               //change location
               x--;
               //mark location
-              marked[y][x] = 1;
+              mark[x][y] = true;
               //find path from location
               return recursiveAlgorithm(x, y);
           }
           //*down
-          if((currentmatrix[y+1][x] != 1) && (marked[y+1][x] == 0)){
+          if((currentmatrix[x][y+1] != 1) && (marked[x][y+1] == false)){
             //change location
             y++;
             //mark location
-            marked[y][x] = 1;
+            mark[x][y] = true;
             //find path from location
             return recursiveAlgorithm(x, y);
           }
           //*up
-          if((currentmatrix[y-1][x] != 1) && (marked[y-1][x] == 0)){
+          if((currentmatrix[x][y-1] != 1) && (marked[x][y-1] == false)){
             //change location
             y--;
             //mark location
-            marked[y][x] = 1;
+            mark[x][y] = true;
             //find path from location
             return recursiveAlgorithm(x, y);
           }
       }
-}*/
+}
 
 function buildlevel(){
   //console.log(currentmatrix);
@@ -568,6 +457,7 @@ function buildlevel(){
         key.y = (i * 36) + 5;
         //show door
         key.show();
+
       }
       //if holds 4, signifies vortex
       if(currentmatrix[i][j] == 4){
@@ -580,10 +470,17 @@ function buildlevel(){
 
         //show
         vortex.show();
-      }
 
-      if(marked[i][j] == 1){
-        l2ctx.drawImage(markedImage, xvalue, yvalue, 36, 36);
+      }
+      if(currentmatrix[i][j] == 5){
+        //update
+        heart1.x = j * 36;
+        heart1.y = i * 36;
+
+
+        //show
+        heart1.show();
+
       }
 
       xvalue+=36;
@@ -596,6 +493,64 @@ function buildlevel(){
   }
 
 }
+
+
+
+var door = doorobject({
+
+  x: 0,
+  y: 0,
+  unlocked:false,
+  opened: false,
+  srcX:0,
+  srcY: 0,
+})
+
+var life=3;
+
+function heartobject(options){
+  var that = {};
+  that.show=function(){
+l2ctx.drawImage(heart, that.x, that.y, 36, 36);
+}
+  that.x = options.x;
+  that.y = options.y;
+
+
+  return that;
+}
+
+var heart1 = heartobject({
+
+  x: 0,
+  y: 0
+})
+
+function keyobject(options){
+  var that = {};
+
+  that.x = options.x;
+  that.y = options.y;
+  that.pickedup = options.pickedup;
+
+  that.show = function(){
+    if(!that.pickedup){
+      l2ctx.drawImage(keyImage, that.x, that.y, 32, 32);
+      l2ctx.drawImage(emptyInventory, 865, 40, 36, 36);
+    }
+    else{
+      l2ctx.clearRect(that.x,that.y,32,32);
+      l2ctx.drawImage(keyInventory, 865, 40, 36, 36);
+    }
+  }
+  return that;
+}
+
+var key = keyobject({
+  pickedup:false,
+  x: 0,
+  y: 0
+})
 
 //declare door
 function doorobject(options){
@@ -612,51 +567,19 @@ function doorobject(options){
     //if door is opened
     if(that.opened == false){
           that.srcY = 0;
+
     }
     //if door is closed
     else if(that.opened == true){
           that.srcY = 48;
+          l2ctx.clearRect(865,40,36,36);
+
     }
     l2ctx.drawImage(doorImage,that.srcX, that.srcY,32,48,that.x,that.y,32,48);
+
   }
   return that;
 }
-
-var door = doorobject({
-
-  x: 0,
-  y: 0,
-  unlocked:false,
-  opened: false,
-  srcX:0,
-  srcY: 0,
-})
-
-
-
-function keyobject(options){
-  var that = {};
-
-  that.x = options.x;
-  that.y = options.y;
-  that.pickedup = options.pickedup;
-
-  that.show = function(){
-    if(!that.pickedup){
-      l2ctx.drawImage(keyImage, that.x, that.y, 32, 32);
-    }
-    else{
-      l2ctx.clearRect(that.x,that.y,32,32);
-    }
-  }
-  return that;
-}
-
-var key = keyobject({
-  pickedup:false,
-  x: 0,
-  y: 0
-})
 
 //general movement FUNCTION
 function movementUpdate(){
@@ -778,7 +701,7 @@ function keyUnpressed(event){
 
   }
 }
-
+var vortexcollision;
 //general collisions FUNCTION
 function collisionsUpdate(){
   //set all collisions to false
@@ -788,6 +711,7 @@ function collisionsUpdate(){
   downcollision = false;
   keycollision = false;
   doorcollision = false;
+  vortexcollision = false;
 
     //first get player matrix locations by adding 16 to find middle of object and dividing current by 36
     matrixX = (player.x+32)/36;
@@ -797,7 +721,7 @@ function collisionsUpdate(){
       matrixY = Math.floor(matrixY);
       console.log("X = ", matrixX, "Y = ", matrixY);
     //set collsisions based on matrix values around player
-    if(currentmatrix[matrixY][matrixX-1] == 1){
+    if(currentmatrix[matrixY][matrixX-1] == 1 || currentmatrix[matrixY][matrixX-1] == 5){
       //set collision to true
       leftcollision = true;
       console.log("LEFT COL, LOOKING AT A ", currentmatrix[matrixX - 1][matrixY], " WHEN CHECKING (",matrixX-1,", ", matrixY,")");
@@ -808,7 +732,7 @@ function collisionsUpdate(){
     //round values down
       matrixX = Math.floor(matrixX);
       matrixY = Math.floor(matrixY);
-    if(currentmatrix[matrixY][matrixX+1] == 1){
+    if(currentmatrix[matrixY][matrixX+1] == 1 || currentmatrix[matrixY][matrixX+1] == 5){
       //set collision to true
       rightcollision = true;
       console.log("RIGHT COL, LOOKING AT A ", currentmatrix[matrixX + 1][matrixY], " WHEN CHECKING (",matrixX+1,", ", matrixY,")");
@@ -819,7 +743,7 @@ function collisionsUpdate(){
     //round values down
       matrixX = Math.floor(matrixX);
       matrixY = Math.floor(matrixY);
-    if(currentmatrix[matrixY +1][matrixX] == 1){
+    if(currentmatrix[matrixY +1][matrixX] == 1 || currentmatrix[matrixY +1][matrixX] == 5){
       //set collision to true
       downcollision = true;
       console.log("DOWN COL, LOOKING AT A ", currentmatrix[matrixX][matrixY + 1], " WHEN CHECKING (",matrixX,", ", matrixY+1,")");
@@ -830,7 +754,7 @@ function collisionsUpdate(){
     //round values down
       matrixX = Math.floor(matrixX);
       matrixY = Math.floor(matrixY);
-    if(currentmatrix[matrixY -1][matrixX] == 1){
+    if(currentmatrix[matrixY -1][matrixX] == 1 || currentmatrix[matrixY -1][matrixX] == 5){
       //set collision to true
       upcollision = true;
       console.log("UP COL, LOOKING AT A ", currentmatrix[matrixX][matrixY - 1], " WHEN CHECKING (",matrixX,", ", matrixY-1,")");
@@ -862,7 +786,15 @@ function collisionsUpdate(){
       keyInv = false;
       door.unlocked = false;
     }
+    if(currentmatrix[matrixX][matrixY] == 4){
+      //set collision to true
+      vortexcollision = true;
+      console.log("vortex COL");
+      life--;
+
 }
+}
+
 
 //gameloop
 function gameLoop(){
@@ -874,6 +806,7 @@ function gameLoop(){
     player.update();
     //Drawing the player
     player.show();
+
     //build level
     buildlevel();
     //update collisions
@@ -881,9 +814,9 @@ function gameLoop(){
     //update movement
     movementUpdate();
 
-    //if *direction is not a wall and is unmarked
-    console.log("PRIME: CHECKING X @ ", demon.x, ", Y @ ", demon.y);
-    breadthFirstSearch(demon);
 }
+
+//(for movement) if player is not vertically colliding, CAN vertically move, same apps. for horizontally
+
 //set for gameLoop to only occur every 200ms
 setInterval(gameLoop,100);
