@@ -43,6 +43,13 @@ layer3.width = canvasWidth;
 layer3.height = canvasHeight;
 //Establishing a context to the canvas
 var l3ctx = layer3.getContext("2d");
+//getting canvas 3rd layer
+var layer4 = document.getElementById('layer4');
+//setting width and height of the canvas
+layer4.width = 1100;
+layer4.height = 100;
+//Establishing a context to the canvas
+var l4ctx = layer4.getContext("2d");
 
 //importing graphics
 var maincharacterImage = new Image();
@@ -69,7 +76,7 @@ emptyInventory.src = "emptyinventory.png";
 
 //matrix for each level
 var level0matrix = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -97,7 +104,7 @@ var level0matrix = [
 ]
 //matrix for each level
 var level1matrix = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
     [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
@@ -125,7 +132,7 @@ var level1matrix = [
 ]
 //matrix for each level
 var level2matrix = [
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 3, 1],
   [1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
   [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
@@ -153,7 +160,7 @@ var level2matrix = [
 ]
 //matrix for each level
 var level3matrix1 = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
     [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
@@ -181,7 +188,7 @@ var level3matrix1 = [
 ]
 //matrix for each level
 var level3matrix2 = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
     [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
@@ -209,7 +216,7 @@ var level3matrix2 = [
 ]
 //matrix for each level
 var level4matrix = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -237,7 +244,7 @@ var level4matrix = [
 ]
 
 var testmatrix = [
-    [0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5],
+    [0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -472,16 +479,6 @@ function buildlevel(){
         vortex.show();
 
       }
-      if(currentmatrix[i][j] == 5){
-        //update
-        heart1.x = j * 36;
-        heart1.y = i * 36;
-
-
-        //show
-        heart1.show();
-
-      }
 
       xvalue+=36;
       //console.log("Matrix Y = ", i, ", Matrix X = ", j, "Value = ", level0matrix[i][j])
@@ -511,20 +508,14 @@ var life=3;
 function heartobject(options){
   var that = {};
   that.show=function(){
-l2ctx.drawImage(heart, that.x, that.y, 36, 36);
+l4ctx.drawImage(heart, 930, 10, 36, 36);
 }
-  that.x = options.x;
-  that.y = options.y;
 
 
   return that;
 }
 
-var heart1 = heartobject({
 
-  x: 0,
-  y: 0
-})
 
 function keyobject(options){
   var that = {};
@@ -536,11 +527,11 @@ function keyobject(options){
   that.show = function(){
     if(!that.pickedup){
       l2ctx.drawImage(keyImage, that.x, that.y, 32, 32);
-      l2ctx.drawImage(emptyInventory, 865, 40, 36, 36);
+      l4ctx.drawImage(emptyInventory, 965, 40, 36, 36);
     }
     else{
       l2ctx.clearRect(that.x,that.y,32,32);
-      l2ctx.drawImage(keyInventory, 865, 40, 36, 36);
+      l4ctx.drawImage(keyInventory, 965, 40, 36, 36);
     }
   }
   return that;
@@ -572,7 +563,7 @@ function doorobject(options){
     //if door is closed
     else if(that.opened == true){
           that.srcY = 48;
-          l2ctx.clearRect(865,40,36,36);
+          l4ctx.clearRect(965,40,36,36);
 
     }
     l2ctx.drawImage(doorImage,that.srcX, that.srcY,32,48,that.x,that.y,32,48);
