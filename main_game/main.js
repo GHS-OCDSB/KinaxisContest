@@ -99,7 +99,7 @@ var level0matrix = [
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
@@ -482,7 +482,7 @@ function buildlevel(){
 
       }
 
-    if(currentmatrix[i][j] == 3){
+    if(currentmatrix[i][j] == 6){
       key2.x = (j * 36) + 9;
       key2.y = (i * 36) + 5;
 
@@ -490,7 +490,7 @@ function buildlevel(){
 
     }
 
-  if(currentmatrix[i][j] == 6){
+  if(currentmatrix[i][j] == 3){
     key3.x = (j * 36) + 9;
     key3.y = (i * 36) + 5;
 
@@ -510,15 +510,7 @@ function buildlevel(){
 
 
 
-var door = doorobject({
 
-  x: 0,
-  y: 0,
-  unlocked:false,
-  opened: false,
-  srcX:0,
-  srcY: 0,
-})
 
 var life=3;
 
@@ -615,6 +607,16 @@ function doorobject(options){
   }
   return that;
 }
+
+var door = doorobject({
+
+  x: 0,
+  y: 0,
+  unlocked:false,
+  opened: false,
+  srcX:0,
+  srcY: 0,
+})
 
 //general movement FUNCTION
 function movementUpdate(){
@@ -822,6 +824,8 @@ keycollision3 = false;
         if(keyInv1 == true){
           console.log('you got a key');
         }
+        door.unlocked = true;
+
 }
         if(currentmatrix[matrixX][matrixY] == 3 && interact){
           //set collision to true
@@ -845,7 +849,6 @@ keycollision3 = false;
               console.log('you got a key');
             }
 
-door.unlocked = true;
       }
 
 }
