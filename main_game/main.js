@@ -536,83 +536,52 @@ l4ctx.drawImage(heart, 0, 10, 36, 36);
 
 
 
-function keyobject1(options){
+function keyobject(options){
   var that = {};
 
   that.x = options.x;
   that.y = options.y;
+  that.invX = options.invX;
+  that.invY =options.invY;
   that.pickedup = options.pickedup;
 
   that.show = function(){
     if(!that.pickedup){
       l2ctx.drawImage(keyImage, that.x, that.y, 32, 32);
-      l4ctx.drawImage(emptyInventory, 40, 40, 36, 36);
+      l4ctx.drawImage(emptyInventory, that.invX, that.invY, 36, 36);
     }
     else{
       l2ctx.clearRect(that.x,that.y,32,32);
-      l4ctx.drawImage(keyInventory, 40, 40, 36, 36);
+      l4ctx.drawImage(keyInventory, that.invX, that.invY, 36, 36);
     }
   }
   return that;
 }
 
-var key1 = keyobject1({
+var key1 = keyobject({
   pickedup:false,
   x: 0,
-  y: 0
+  y: 0,
+  invX: 4,
+  invY: 40
+
 })
-
-function keyobject2(options){
-  var that = {};
-
-  that.x = options.x;
-  that.y = options.y;
-  that.pickedup = options.pickedup;
-
-  that.show = function(){
-    if(!that.pickedup){
-      l2ctx.drawImage(keyImage, that.x, that.y, 32, 32);
-      l4ctx.drawImage(emptyInventory, 4, 40, 36, 36);
-    }
-    else{
-      l2ctx.clearRect(that.x,that.y,32,32);
-      l4ctx.drawImage(keyInventory, 4, 40, 36, 36);
-    }
-  }
-  return that;
-}
-
-var key2 = keyobject2({
+var key2 = keyobject({
   pickedup:false,
   x: 0,
-  y: 0
+  y: 0,
+  invX:40,
+  invY: 40
 })
-
-function keyobject3(options){
-  var that = {};
-
-  that.x = options.x;
-  that.y = options.y;
-  that.pickedup = options.pickedup;
-
-  that.show = function(){
-    if(!that.pickedup){
-      l2ctx.drawImage(keyImage, that.x, that.y, 32, 32);
-      l4ctx.drawImage(emptyInventory, 80, 40, 36, 36);
-    }
-    else{
-      l2ctx.clearRect(that.x,that.y,32,32);
-      l4ctx.drawImage(keyInventory, 80, 40, 36, 36);
-    }
-  }
-  return that;
-}
-
-var key3 = keyobject3({
+var key3 = keyobject({
   pickedup:false,
   x: 0,
-  y: 0
+  y: 0,
+  invX:80,
+  invY: 40
 })
+
+
 
 //declare door
 function doorobject(options){
