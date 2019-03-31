@@ -16,9 +16,10 @@ var playerlocationstr = "level0";
 var level = 0;
 var currentmatrix;
 //inventory
-var keyInv;
+
 var keyInv1;
 var keyInv2;
+var keyInv3;
 //create canvas
 //Width and height for our canvas
 var canvasWidth = 900;
@@ -134,7 +135,7 @@ var level1matrix = [
 //matrix for each level
 var level2matrix = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 3, 1],
+  [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 6, 1],
   [1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
   [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
   [1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
@@ -156,7 +157,7 @@ var level2matrix = [
   [1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
   [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1],
   [1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 6, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 5, 1],
+  [1, 3, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 5, 1],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 //matrix for each level
@@ -459,14 +460,7 @@ function buildlevel(){
         //show door
         door.show();
       }
-      //if current matrix value holds 3, signifies key
-      if(currentmatrix[i][j] == 3){
-        key.x = (j * 36) + 9;
-        key.y = (i * 36) + 5;
-        //show door
-        key.show();
 
-      }
       //if holds 4, signifies vortex
       if(currentmatrix[i][j] == 4){
         //update
@@ -483,17 +477,26 @@ function buildlevel(){
       if(currentmatrix[i][j] == 5){
         key1.x = (j * 36) + 9;
         key1.y = (i * 36) + 5;
-        //show door
+
         key1.show();
 
       }
-      if(currentmatrix[i][j] == 6){
-        key2.x = (j * 36) + 9;
-        key2.y = (i * 36) + 5;
-        //show door
-        key2.show();
 
-      }
+    if(currentmatrix[i][j] == 3){
+      key2.x = (j * 36) + 9;
+      key2.y = (i * 36) + 5;
+
+      key2.show();
+
+    }
+
+  if(currentmatrix[i][j] == 6){
+    key3.x = (j * 36) + 9;
+    key3.y = (i * 36) + 5;
+
+    key3.show();
+
+  }
       xvalue+=36;
       //console.log("Matrix Y = ", i, ", Matrix X = ", j, "Value = ", level0matrix[i][j])
     }
@@ -522,7 +525,7 @@ var life=3;
 function heartobject(options){
   var that = {};
   that.show=function(){
-l4ctx.drawImage(heart, 930, 10, 36, 36);
+l4ctx.drawImage(heart, 0, 10, 36, 36);
 }
 
 
@@ -531,31 +534,7 @@ l4ctx.drawImage(heart, 930, 10, 36, 36);
 
 
 
-function keyobject(options){
-  var that = {};
 
-  that.x = options.x;
-  that.y = options.y;
-  that.pickedup = options.pickedup;
-
-  that.show = function(){
-    if(!that.pickedup){
-      l2ctx.drawImage(keyImage, that.x, that.y, 32, 32);
-      l4ctx.drawImage(emptyInventory, 2, 40, 36, 36);
-    }
-    else{
-      l2ctx.clearRect(that.x,that.y,32,32);
-      l4ctx.drawImage(keyInventory, 2, 40, 36, 36);
-    }
-  }
-  return that;
-}
-
-var key = keyobject({
-  pickedup:false,
-  x: 0,
-  y: 0
-})
 
 function keyobject1(options){
   var that = {};
@@ -593,17 +572,43 @@ function keyobject2(options){
   that.show = function(){
     if(!that.pickedup){
       l2ctx.drawImage(keyImage, that.x, that.y, 32, 32);
-      l4ctx.drawImage(emptyInventory, 78, 40, 36, 36);
+      l4ctx.drawImage(emptyInventory, 4, 40, 36, 36);
     }
     else{
       l2ctx.clearRect(that.x,that.y,32,32);
-      l4ctx.drawImage(keyInventory, 78, 40, 36, 36);
+      l4ctx.drawImage(keyInventory, 4, 40, 36, 36);
     }
   }
   return that;
 }
 
 var key2 = keyobject2({
+  pickedup:false,
+  x: 0,
+  y: 0
+})
+
+function keyobject3(options){
+  var that = {};
+
+  that.x = options.x;
+  that.y = options.y;
+  that.pickedup = options.pickedup;
+
+  that.show = function(){
+    if(!that.pickedup){
+      l2ctx.drawImage(keyImage, that.x, that.y, 32, 32);
+      l4ctx.drawImage(emptyInventory, 80, 40, 36, 36);
+    }
+    else{
+      l2ctx.clearRect(that.x,that.y,32,32);
+      l4ctx.drawImage(keyInventory, 80, 40, 36, 36);
+    }
+  }
+  return that;
+}
+
+var key3 = keyobject3({
   pickedup:false,
   x: 0,
   y: 0
@@ -627,14 +632,16 @@ function doorobject(options){
 
     }
     //if door is closed
-    else if(that.opened == true){
+    else {
           that.srcY = 48;
           l4ctx.clearRect(4,42,32,32);
           l4ctx.clearRect(42,42,32,32);
           l4ctx.clearRect(80,42,32,32);
+          console.log("door open");
 
     }
     l2ctx.drawImage(doorImage,that.srcX, that.srcY,32,48,that.x,that.y,32,48);
+
 
   }
   return that;
@@ -768,9 +775,9 @@ function collisionsUpdate(){
   rightcollision = false;
   upcollision = false;
   downcollision = false;
-  keycollision = false;
   keycollision1 = false;
-  keycollision2 = false;
+keycollision2 = false;
+keycollision3 = false;
   doorcollision = false;
   vortexcollision = false;
 
@@ -804,7 +811,7 @@ function collisionsUpdate(){
     //round values down
       matrixX = Math.floor(matrixX);
       matrixY = Math.floor(matrixY);
-    if(currentmatrix[matrixY +1][matrixX] == 1 || currentmatrix[matrixY +1][matrixX] == 5){
+    if(currentmatrix[matrixY +1][matrixX] == 1){
       //set collision to true
       downcollision = true;
       console.log("DOWN COL, LOOKING AT A ", currentmatrix[matrixX][matrixY + 1], " WHEN CHECKING (",matrixX,", ", matrixY+1,")");
@@ -826,19 +833,7 @@ function collisionsUpdate(){
     //round values down
       matrixX = Math.floor(matrixX);
       matrixY = Math.floor(matrixY);
-    if(currentmatrix[matrixX][matrixY] == 6 && interact){
-      //set collision to true
-      keycollision = true;
-      console.log("KEY COL");
-      keyInv = true;
-      key.pickedup = true;
 
-      if(keyInv == true){
-        console.log('you got a key');
-      }
-
-      door.unlocked = true;
-    }
     if(currentmatrix[matrixX][matrixY] == 2 && door.unlocked == true && interact == true){
       //set collision to true
       doorcollision = true;
@@ -846,9 +841,6 @@ function collisionsUpdate(){
       door.opened = true;
       keyInv = false;
       door.unlocked = false;
-      l4ctx.clearRect(4,42,32,32);
-      l4ctx.clearRect(42,42,32,32);
-      l4ctx.clearRect(80,42,32,32);
     }
 
       if(currentmatrix[matrixX][matrixY] == 5 && interact){
@@ -861,29 +853,39 @@ function collisionsUpdate(){
         if(keyInv1 == true){
           console.log('you got a key');
         }
+}
+        if(currentmatrix[matrixX][matrixY] == 3 && interact){
+          //set collision to true
+          keycollision2 = true;
+          console.log("KEY COL");
+          keyInv2 = true;
+          key2.pickedup = true;
 
-        door.unlocked = true;
+          if(keyInv2 == true){
+            console.log('you got a key');
+          }
+}
+          if(currentmatrix[matrixX][matrixY] == 6 && interact){
+            //set collision to true
+            keycollision3 = true;
+            console.log("KEY COL");
+            keyInv3 = true;
+            key3.pickedup = true;
+
+            if(keyInv3 == true){
+              console.log('you got a key');
+            }
+
+door.unlocked = true;
       }
-      if(currentmatrix[matrixX][matrixY] == 3 && interact){
-        //set collision to true
-        keycollision2 = true;
-        console.log("KEY COL");
-        keyInv2 = true;
-        key2.pickedup = true;
 
-        if(keyInv2 == true){
-          console.log('you got a key1');
-        }
-
-        door.unlocked = true;
-      }
 }
 
 
 //gameloop
 function gameLoop(){
     //set current matrix
-    currentmatrix = level4matrix;
+    currentmatrix = level2matrix;
     //set background
     background();
     //Updating the frame
