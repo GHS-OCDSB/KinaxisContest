@@ -15,11 +15,13 @@ document.addEventListener('keyup', keyUnpressed, false);
 var playerlocationstr = "level0";
 var level = 0;
 var currentmatrix;
+var noOfEnemy = 0;
 //inventory
 
-var keyInv1;
-var keyInv2;
-var keyInv3;
+var keyInv1 = false;
+var keyInv2 = false;
+var keyInv3 = false;
+
 //create canvas
 //Width and height for our canvas
 var canvasWidth = 900;
@@ -45,7 +47,7 @@ layer3.width = canvasWidth;
 layer3.height = canvasHeight;
 //Establishing a context to the canvas
 var l3ctx = layer3.getContext("2d");
-//getting canvas 3rd layer
+//getting canvas 4th layer
 var layer4 = document.getElementById('layer4');
 //setting width and height of the canvas
 layer4.width = 1100;
@@ -66,6 +68,8 @@ var brickImage = new Image();
 brickImage.src = "brick.png";
 var vortexImage = new Image();
 vortexImage.src = "vortex.png";
+var markedImage = new Image();
+markedImage.src = "marker.png";
 var heart = new Image();
 heart.src = "heart.png";
 var emptyHeart = new Image();
@@ -74,7 +78,36 @@ var keyInventory = new Image();
 keyInventory.src = "keyinventory.png";
 var emptyInventory = new Image();
 emptyInventory.src = "emptyinventory.png";
+var saviourImage = new Image();
+saviourImage.src = "hero.png";
 
+var followPath = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
 
 //matrix for each level
 var level0matrix = [
@@ -347,11 +380,67 @@ var player = sprite({
   curFrame: 0
 })
 
-var demon = sprite({
+var saviour = sprite({
+  context: l3ctx,
+  x: 0,
+  y: 0,
+  moving: false,
+  srcX:0,
+  srcY: 0,
+  lastX:0,
+  lastY:0,
+  sheetwidth: 32,
+  sheetheight: 32,
+  sizewidth: 32,
+  sizeheight: 32,
+  image: saviourImage,
+  frameCount: 1,
+  curFrame: 0
+})
 
-  context: l1ctx,
-  x: 70,
-  y: 30,
+var demon1 = sprite({
+
+  context: l3ctx,
+  x: 0,
+  y: 0,
+  moving: true,
+  srcX:0,
+  srcY: 0,
+  lastX:70,
+  lastY:30,
+  sheetwidth: 32,
+  sheetheight: 32,
+  sizewidth: 32,
+  sizeheight: 32,
+  image: demonImage,
+  frameCount: 3,
+  curFrame: 0
+})
+
+var demon2 = sprite({
+
+  context: l3ctx,
+  x: 0,
+  y: 0,
+  moving: true,
+  srcX:0,
+  srcY: 0,
+  lastX:70,
+  lastY:30,
+  sheetwidth: 32,
+  sheetheight: 32,
+  sizewidth: 32,
+  sizeheight: 32,
+  image: demonImage,
+  frameCount: 3,
+  curFrame: 0
+})
+
+var demon3 = sprite({
+
+  context: l3ctx,
+  x: 0,
+  y: 0,
   moving: true,
   srcX:0,
   srcY: 0,
@@ -384,60 +473,331 @@ var vortex = sprite({
   curFrame: 0
 })
 
-var wasHere;
-var finalPath;
-var finalPathLen=-1;
-var currentX = (demon.x/36)+1;
-var currentY = (demon.y/36)+1;
-var goalX = (player.x/36)+1;
-var goalY = (player.y/36)+1;
-var marked;
+function QItem(y, x, dist, path){
 
-function recursiveAlgorithm(x, y){
-  //if at goal
-      if((x == goalX)&&(y == goalY)){
-        //return current location?
-        return x, y;
-      }
-      else{
-          //if *direction is not a wall and is unmarked
-          //*right
-          if((currentmatrix[x+1][y] != 1) && (marked[x+1][y] == false)){
-                //change location
-                x++;
-                //mark location
-                mark[x][y] = true;
-                //find path from location
-                return recursiveAlgorithm(x, y);
-          }
-          //*left
-          if((currentmatrix[x-1][y] != 1) && (marked[x-1][y] == false)){
-              //change location
-              x--;
-              //mark location
-              mark[x][y] = true;
-              //find path from location
-              return recursiveAlgorithm(x, y);
-          }
-          //*down
-          if((currentmatrix[x][y+1] != 1) && (marked[x][y+1] == false)){
-            //change location
-            y++;
-            //mark location
-            mark[x][y] = true;
-            //find path from location
-            return recursiveAlgorithm(x, y);
-          }
-          //*up
-          if((currentmatrix[x][y-1] != 1) && (marked[x][y-1] == false)){
-            //change location
-            y--;
-            //mark location
-            mark[x][y] = true;
-            //find path from location
-            return recursiveAlgorithm(x, y);
-          }
-      }
+  this.x = x;
+  this.y = y;
+  this.dist = dist;
+  this.path = path;
+}
+
+function pathCoords(y, x){
+  this.x = x;
+  this.y =y;
+}
+
+var enemySource = new QItem(0, 0, 0, []);
+
+var marked = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+var queue = [];
+var goalX = (player.x/36);
+var goalY = (player.y/36);
+var solved = false;
+var shortestPath = [];
+
+function breadthFirstSearch(source){
+  //reset
+  marked = [
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ ];
+  queue = [];
+  goalX = (player.x/36);
+  goalY = (player.y/36);
+
+  //divide source variable
+  source.x = (source.x/36);
+  source.y = (source.y/36);
+  source.dist = 0;
+  source.path = [];
+  //floor source variable
+  source.x = Math.floor(source.x);
+  source.y = Math.floor(source.y);
+
+  goalX = Math.floor(goalX);
+  goalY = Math.floor(goalY);
+
+  //add source to queue
+  queue.push(source);
+
+//  console.log("Initial Path: ", source.path);
+
+  marked[source.y][source.x] = 1;
+
+  //while queue isn't empty
+  while(queue.length>0){
+
+          //  const checking = Object.assign({}, queue.shift());
+            var thisinQ = queue.shift();
+            var checking = clone(thisinQ);
+            //console.log("x ", checking.x, ", y ", checking.y,", dist ", checking.dist, ", path ", checking.path);
+
+            var newCoord = new pathCoords(checking.y, checking.x);
+
+            //increase checking distance by 1;
+            checking.dist+=1;
+            checking.path.push(newCoord);
+
+
+            //if destination is found
+            if((checking.x == goalX) && (checking.y == goalY)){
+                //console.log("SOLVED! Distance is ", checking.dist);
+
+                shortestPath = checking.path;
+                //console.log("PATH: ", shortestPath);
+                //solved = true;
+                return checking.dist;
+            }
+
+            else{
+                //*right
+                if((currentmatrix[checking.y][checking.x+1] != 1) && (marked[checking.y][checking.x+1] == 0)){
+
+                      marked[checking.y][checking.x+1] = 1;
+                      //console.log("R; PATH is NOW ", checking.path.length);
+
+                      var newItem = clone(checking);
+                      newItem.x+=1;
+
+                    //  console.log("NEW VAR: ", newItem, "Checking Path ", checking.path.length);
+                      //queue current
+                      queue.push(newItem);
+                }
+                //*left
+                if((currentmatrix[checking.y][checking.x-1] != 1) && (marked[checking.y][checking.x-1] == 0)){
+
+                      marked[checking.y][checking.x-1] = 1;
+                      //console.log("L; PATH is NOW ", checking.path.length);
+
+                      var newItem = clone(checking);
+                      newItem.x-=1;
+                    //  console.log("NEW VAR: ", newItem, "Checking Path ", checking.path.length);
+                      //queue current
+                      queue.push(newItem);
+                }
+                //*down
+                if((currentmatrix[checking.y+1][checking.x] != 1) && (marked[checking.y+1][checking.x] == 0)){
+
+                      marked[checking.y+1][checking.x] = 1;
+                      //console.log("U; PATH is NOW ", checking.path.length);
+
+                      var newItem = clone(checking);
+                      newItem.y+=1;
+                  //    console.log("NEW VAR: ", newItem, "Checking Path ", checking.path.length);
+                      //queue current
+                      queue.push(newItem);
+
+                }
+                //*up
+                  if((currentmatrix[checking.y-1][checking.x] != 1) && (marked[checking.y-1][checking.x] == 0)){
+
+                       marked[checking.y-1][checking.x] = 1;
+                       //  console.log("D; PATH is NOW ", checking.path.length);
+
+                       var newItem = clone(checking);
+                       newItem.y-=1;
+                     //  console.log("NEW VAR: ", newItem, "Checking Path ", checking.path.length);
+                       //queue current
+                       queue.push(newItem);
+                   }
+
+              }
+
+    }
+}
+
+function clone(obj) {
+    var copy;
+
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj;
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = [];
+        for (var i = 0, len = obj.length; i < len; i++) {
+            copy[i] = clone(obj[i]);
+        }
+        return copy;
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        copy = {};
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+        }
+        return copy;
+    }
+
+    throw new Error("Unable to copy obj! Its type isn't supported.");
+}
+
+function demonAIinterpret(demon){
+  followPath = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ];
+
+  //generate path
+  for (var i = 0; i<shortestPath.length;i++){
+    followPath[shortestPath[i].y][shortestPath[i].x] = 1;
+  }
+
+  var demonMatrixX = demon.x/36;
+  var demonMatrixY = demon.y/36;
+  var speed = 36;
+  var mvdTR = false;
+  mvdTR = false;
+
+  demon.lastX= demon.x;
+  demon.lastY= demon.y;
+
+
+          //var editing
+          demonMatrixX = Math.floor(demonMatrixX);
+          demonMatrixY = Math.floor(demonMatrixY);
+          //set here to visited on path
+          followPath[demonMatrixY][demonMatrixX] = 0;
+
+        console.log("ADJACENTS: R = ",followPath[demonMatrixY][demonMatrixX+1], ", L = ", marked[demonMatrixY][demonMatrixX-1], ", U = ",  marked[demonMatrixY-1][demonMatrixX], ", D = ", marked[demonMatrixY+1][demonMatrixX]);
+
+  //if on goal
+  if((demonMatrixX==goalX)&&(demonMatrixY==goalY)){
+    speed = 36;
+  }
+  //use marked to move
+
+
+        if((followPath[demonMatrixY][demonMatrixX+1] == 1) && (mvdTR == false)){
+
+          //console.log("demon move right")
+          demon.moving = true;
+          demon.x+=speed;
+          mvdTR = true;
+
+
+          return;
+        }
+
+
+        //left
+        if((followPath[demonMatrixY][demonMatrixX-1] == 1) && (mvdTR == false)){
+
+        //  console.log("demon move left");
+          demon.moving = true;
+          demon.x-=speed;
+          mvdTR = true;
+
+          return;
+        }
+
+
+        //up
+        if((followPath[demonMatrixY-1][demonMatrixX] == 1) && (mvdTR == false)){
+
+      //   console.log("demon move up");
+          demon.moving = true;
+          demon.y-=speed;
+          mvdTR = true;
+
+          return;
+        }
+
+
+        //down
+        if((followPath[demonMatrixY+1][demonMatrixX] == 1) && (mvdTR == false)){
+
+      //   console.log("demon move down");
+          demon.moving = true;
+          demon.y+=speed;
+          mvdTR = true;
+
+          return;
+        }
+
+    // console.log("demon cant move");
+      demon.moving = false;
+
 }
 
 function buildlevel(){
@@ -460,7 +820,29 @@ function buildlevel(){
         //show door
         door.show();
       }
+      //if current matrix value holds 3, signifies key
+              if(currentmatrix[i][j] == 5){
+                key1.x = (j * 36) + 9;
+                key1.y = (i * 36) + 5;
 
+                key1.show();
+
+              }
+
+            if(currentmatrix[i][j] == 6){
+              key2.x = (j * 36) + 9;
+              key2.y = (i * 36) + 5;
+
+              key2.show();
+
+            }
+
+          if(currentmatrix[i][j] == 3){
+            key3.x = (j * 36) + 9;
+            key3.y = (i * 36) + 5;
+
+            key3.show();
+          }
       //if holds 4, signifies vortex
       if(currentmatrix[i][j] == 4){
         //update
@@ -469,34 +851,29 @@ function buildlevel(){
         vortex.lastX = j * 36;
         vortex.lastY = i * 36;
         vortex.update();
+          if (noOfEnemy==0){
+            noOfEnemy+=1;
+            demon1.x = j*36;
+            demon1.y = i*36;
+            console.log("1 x set to ", demon1.x, "y set to ",demon1.y);
+          }
+          else if (noOfEnemy==1){
+            noOfEnemy+=1;
+            demon2.x = j*36;
+            demon2.y = i*36;
+            console.log("2 x set to ", demon2.x, "y set to ",demon2.y);
+          }
+          else if (noOfEnemy==2){
+            noOfEnemy+=1;
+            demon3.x = j*36;
+            demon3.y = i*36;
+            console.log("3 x set to ", demon3.x, "y set to ",demon3.y);
+          }
 
         //show
         vortex.show();
-
-      }
-      if(currentmatrix[i][j] == 5){
-        key1.x = (j * 36) + 9;
-        key1.y = (i * 36) + 5;
-
-        key1.show();
-
       }
 
-    if(currentmatrix[i][j] == 6){
-      key2.x = (j * 36) + 9;
-      key2.y = (i * 36) + 5;
-
-      key2.show();
-
-    }
-
-  if(currentmatrix[i][j] == 3){
-    key3.x = (j * 36) + 9;
-    key3.y = (i * 36) + 5;
-
-    key3.show();
-
-  }
       xvalue+=36;
       //console.log("Matrix Y = ", i, ", Matrix X = ", j, "Value = ", level0matrix[i][j])
     }
@@ -508,25 +885,84 @@ function buildlevel(){
 
 }
 
+function demonSpawn(){
+
+  console.log("Demon Spawn Running. noOfEnemy is ", noOfEnemy);
+
+  if (noOfEnemy == 1){
+      demon1.update();
+      demon1.show();
+  }
+
+  if (noOfEnemy == 2){
+    demon1.update();
+    demon1.show();
+    demon2.update();
+    demon2.show();
+  }
+
+  if (noOfEnemy == 3){
+    console.log("got in here!");
+    demon1.update();
+    demon1.show();
+    console.log("d1 spawn x = ", demon1.x);
+    demon2.update();
+    demon2.show();
+    console.log("d2 spawn x = ", demon2.x)
+    demon3.update();
+    demon3.show();
+    console.log("d3 spawn x = ", demon3.x)
+  }
 
 
-
-
-var life=3;
-
-function heartobject(options){
-  var that = {};
-  that.show=function(){
-l4ctx.drawImage(heart, 0, 10, 36, 36);
 }
 
+//declare door
+function doorobject(options){
+  var that = {};
 
+  that.opened = options.opened;
+  that.unlocked = options.unlocked;
+  that.x = options.x;
+  that.y = options.y;
+  that.srcX = options.srcX;
+  that.srcY = options.srcY;
+
+  that.show = function(){
+    //if door is opened
+    if(that.opened == false){
+          that.srcY = 0;
+
+    }
+    //if door is closed
+    else {
+          //set key invs to false
+          var keyInv1 = false;
+          var keyInv2 = false;
+          var keyInv3 = false;
+          that.srcY = 48;
+          l4ctx.clearRect(4,42,32,32);
+          l4ctx.clearRect(42,42,32,32);
+          l4ctx.clearRect(80,42,32,32);
+          console.log("door open");
+
+    }
+    l2ctx.drawImage(doorImage,that.srcX, that.srcY,32,48,that.x,that.y,32,48);
+
+
+  }
   return that;
 }
 
+var door = doorobject({
 
-
-
+  x: 0,
+  y: 0,
+  unlocked:false,
+  opened: false,
+  srcX:0,
+  srcY: 0,
+})
 
 function keyobject(options){
   var that = {};
@@ -571,51 +1007,6 @@ var key3 = keyobject({
   y: 0,
   invX:80,
   invY: 40
-})
-
-
-
-//declare door
-function doorobject(options){
-  var that = {};
-
-  that.opened = options.opened;
-  that.unlocked = options.unlocked;
-  that.x = options.x;
-  that.y = options.y;
-  that.srcX = options.srcX;
-  that.srcY = options.srcY;
-
-  that.show = function(){
-    //if door is opened
-    if(that.opened == false){
-          that.srcY = 0;
-
-    }
-    //if door is closed
-    else {
-          that.srcY = 48;
-          l4ctx.clearRect(4,42,32,32);
-          l4ctx.clearRect(42,42,32,32);
-          l4ctx.clearRect(80,42,32,32);
-          console.log("door open");
-
-    }
-    l2ctx.drawImage(doorImage,that.srcX, that.srcY,32,48,that.x,that.y,32,48);
-
-
-  }
-  return that;
-}
-
-var door = doorobject({
-
-  x: 0,
-  y: 0,
-  unlocked:false,
-  opened: false,
-  srcX:0,
-  srcY: 0,
 })
 
 //general movement FUNCTION
@@ -738,7 +1129,7 @@ function keyUnpressed(event){
 
   }
 }
-var vortexcollision;
+
 //general collisions FUNCTION
 function collisionsUpdate(){
   //set all collisions to false
@@ -746,11 +1137,8 @@ function collisionsUpdate(){
   rightcollision = false;
   upcollision = false;
   downcollision = false;
-  keycollision1 = false;
-keycollision2 = false;
-keycollision3 = false;
+  keycollision = false;
   doorcollision = false;
-  vortexcollision = false;
 
     //first get player matrix locations by adding 16 to find middle of object and dividing current by 36
     matrixX = (player.x+32)/36;
@@ -758,12 +1146,12 @@ keycollision3 = false;
     //round values down
       matrixX = Math.floor(matrixX);
       matrixY = Math.floor(matrixY);
-      console.log("X = ", matrixX, "Y = ", matrixY);
+      //console.log("X = ", matrixX, "Y = ", matrixY);
     //set collsisions based on matrix values around player
     if(currentmatrix[matrixY][matrixX-1] == 1){
       //set collision to true
       leftcollision = true;
-      console.log("LEFT COL, LOOKING AT A ", currentmatrix[matrixX - 1][matrixY], " WHEN CHECKING (",matrixX-1,", ", matrixY,")");
+      //console.log("LEFT COL, LOOKING AT A ", currentmatrix[matrixX - 1][matrixY], " WHEN CHECKING (",matrixX-1,", ", matrixY,")");
     }
     //first get player matrix locations by adding 16 to find middle of object and dividing current by 36
     matrixX = (player.x)/36;
@@ -774,7 +1162,7 @@ keycollision3 = false;
     if(currentmatrix[matrixY][matrixX+1] == 1){
       //set collision to true
       rightcollision = true;
-      console.log("RIGHT COL, LOOKING AT A ", currentmatrix[matrixX + 1][matrixY], " WHEN CHECKING (",matrixX+1,", ", matrixY,")");
+      //console.log("RIGHT COL, LOOKING AT A ", currentmatrix[matrixX + 1][matrixY], " WHEN CHECKING (",matrixX+1,", ", matrixY,")");
     }
     //first get player matrix locations by adding 16 to find middle of object and dividing current by 36
     matrixX = (player.x+16)/36;
@@ -785,7 +1173,7 @@ keycollision3 = false;
     if(currentmatrix[matrixY +1][matrixX] == 1){
       //set collision to true
       downcollision = true;
-      console.log("DOWN COL, LOOKING AT A ", currentmatrix[matrixX][matrixY + 1], " WHEN CHECKING (",matrixX,", ", matrixY+1,")");
+      //console.log("DOWN COL, LOOKING AT A ", currentmatrix[matrixX][matrixY + 1], " WHEN CHECKING (",matrixX,", ", matrixY+1,")");
     }
     //first get player matrix locations by adding 16 to find middle of object and dividing current by 36
     matrixX = (player.x+16)/36;
@@ -796,7 +1184,7 @@ keycollision3 = false;
     if(currentmatrix[matrixY -1][matrixX] == 1){
       //set collision to true
       upcollision = true;
-      console.log("UP COL, LOOKING AT A ", currentmatrix[matrixX][matrixY - 1], " WHEN CHECKING (",matrixX,", ", matrixY-1,")");
+      //console.log("UP COL, LOOKING AT A ", currentmatrix[matrixX][matrixY - 1], " WHEN CHECKING (",matrixX,", ", matrixY-1,")");
     }
     //first get player matrix locations by adding 16 to find middle of object and dividing current by 36
     matrixX = (player.x+16)/36;
@@ -804,6 +1192,46 @@ keycollision3 = false;
     //round values down
       matrixX = Math.floor(matrixX);
       matrixY = Math.floor(matrixY);
+
+      if(currentmatrix[matrixX][matrixY] == 5 && interact){
+              //set collision to true
+              keycollision1 = true;
+              console.log("KEY COL");
+              keyInv1 = true;
+              key1.pickedup = true;
+
+              if(keyInv1 == true){
+                console.log('you got a key');
+              }
+
+      }
+              if(currentmatrix[matrixX][matrixY] == 3 && interact){
+                //set collision to true
+                keycollision2 = true;
+                console.log("KEY COL");
+                keyInv2 = true;
+                key2.pickedup = true;
+
+                if(keyInv2 == true){
+                  console.log('you got a key');
+                }
+      }
+                if(currentmatrix[matrixX][matrixY] == 6 && interact){
+                  //set collision to true
+                  keycollision3 = true;
+                  console.log("KEY COL");
+                  keyInv3 = true;
+                  key3.pickedup = true;
+
+                  if(keyInv3 == true){
+                    console.log('you got a key');
+                  }
+
+            }
+
+            if((keyInv1==true)&&(keyInv2==true)&&(keyInv3==true)){
+              door.unlocked = true;
+            }
 
     if(currentmatrix[matrixX][matrixY] == 2 && door.unlocked == true && interact == true){
       //set collision to true
@@ -813,49 +1241,18 @@ keycollision3 = false;
       keyInv = false;
       door.unlocked = false;
     }
-
-      if(currentmatrix[matrixX][matrixY] == 5 && interact){
-        //set collision to true
-        keycollision1 = true;
-        console.log("KEY COL");
-        keyInv1 = true;
-        key1.pickedup = true;
-
-        if(keyInv1 == true){
-          console.log('you got a key');
-        }
-        door.unlocked = true;
-
 }
-        if(currentmatrix[matrixX][matrixY] == 3 && interact){
-          //set collision to true
-          keycollision2 = true;
-          console.log("KEY COL");
-          keyInv2 = true;
-          key2.pickedup = true;
 
-          if(keyInv2 == true){
-            console.log('you got a key');
-          }
-}
-          if(currentmatrix[matrixX][matrixY] == 6 && interact){
-            //set collision to true
-            keycollision3 = true;
-            console.log("KEY COL");
-            keyInv3 = true;
-            key3.pickedup = true;
-
-            if(keyInv3 == true){
-              console.log('you got a key');
-            }
-
-      }
+//function for last level
+function endGame(){
 
 }
 
+var counter = 0;
 
 //gameloop
 function gameLoop(){
+  counter+=1;
     //set current matrix
     currentmatrix = level2matrix;
     //set background
@@ -872,9 +1269,37 @@ function gameLoop(){
     //update movement
     movementUpdate();
 
+    if((counter%6) == 0){
+      //set enemy source to demon attributes
+      enemySource.x = demon1.x;
+      enemySource.y = demon1.y;
+      //send
+      breadthFirstSearch(enemySource);
+
+      demonAIinterpret(demon1);
+
+      //set enemy source to demon attributes
+      enemySource.x = demon2.x;
+      enemySource.y = demon2.y;
+      //send
+      breadthFirstSearch(enemySource);
+      demonAIinterpret(demon2);
+
+      //set enemy source to demon attributes
+      enemySource.x = demon3.x;
+      enemySource.y = demon3.y;
+      //send
+      breadthFirstSearch(enemySource);
+      demonAIinterpret(demon3);
+
+      demonSpawn();
+    }
+
+
+      if (currentlevel == level4matrix){
+
+      }
+
 }
-
-//(for movement) if player is not vertically colliding, CAN vertically move, same apps. for horizontally
-
 //set for gameLoop to only occur every 200ms
 setInterval(gameLoop,100);
